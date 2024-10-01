@@ -4,7 +4,7 @@ from flask.cli import with_appcontext, AppGroup
 
 from App.database import db, get_migrate
 from App.main import create_app
-from App.controllers import ( create_user, get_all_users_json, get_all_users )
+from App.controllers import ( create_user, get_all_users_json, get_all_users, create_staff, get_all_staffs)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
@@ -64,6 +64,53 @@ def user_tests_command(type):
         sys.exit(pytest.main(["-k", "UserIntegrationTests"]))
     else:
         sys.exit(pytest.main(["-k", "App"]))
-    
 
-app.cli.add_command(test)
+
+'''
+Staff Commands: Add student
+'''
+
+staff_cli = AppGroup('student', help='Staff objects commands')
+
+@staff_cli.command("create", help="Creates a staff")
+@click.argument("firstname", default="akash")
+@click.argument("lastname", default="singh")
+@click.argument("password", default= "akashpass")
+def create_staff_command(firstname, lastname, password):
+    create_staff(firstname, lastname, password)
+    print(f'{firstname, lastname, password} created!')
+
+
+@staff_cli.command("get-student", help="Retrieves staff by name")
+@click.argument("staffname", default="string")
+def list_staff_command(staffname):
+    if staffname == 'string':
+        print(get_all_staffs())
+   
+
+
+app.cli.add_command(staff_cli)
+
+'''
+Review Commands
+'''
+review_cli = AppGroup('review', help= 'Review objects commands')
+
+@review_cli.command("add_review", help = "Adds a review")
+@click.argument('firstname', default = 'akash')
+@click.argument('lastname', default = 'singh')
+@click.argument('text', default = 'Nirvan is a student who tend to lose focus in class.')
+def add_review_command(firstname, lastname, text):
+    akash = User.query.filter_by(firstname=firstname).first()
+    if not akash:
+        print(f'{firstname} not found!')
+        return
+        new_review = Review(text)
+        akash.reviews.append(new_review)
+        db.session.add(akash)
+        db.session.commit()
+        print('Review added!')
+
+app.cli.add_command(review_cli)
+
+
