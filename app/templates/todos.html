@@ -1,0 +1,31 @@
+{% extends "authenticated-base.html" %}
+
+{% block external_js %}
+<script src="{{ url_for('static', path='js/todos.js')}}"></script>
+{% endblock %}
+
+{% block subpage_content %}
+
+<div class="container">
+    <div class="row">
+        <p>
+            This table loads your todos from <a href="/api/todos">/api/todos</a>
+        </p>
+    </div>
+
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody id="result">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
