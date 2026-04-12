@@ -103,3 +103,28 @@ If you so ever choose to use this template for your own projects, please conside
 3. You'd need to look into a database migration / upgrade tool like alembic
 4. You may want to dockerize the application for easier deployment
 5. You may want to switch from storing cookies in localstorage to only cookies depending on your security needs.
+
+### Heading 3
+
+this is normal a text
+- this is a bullet point
+
+1. This is an ordered list
+2. this is the second
+
+> this blockquote
+
+`python -m venv venv`
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -e .
+```
+
+---
+
+## Section 2
+| a column | column |
+|---|---|
+| row | row |
